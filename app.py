@@ -1,4 +1,5 @@
 import streamlit as st
+prediction =0
 st.title("NBA")
 st.header("Enter height to see the expacted points")
 height = st.number_input("enter height:", min_value=0, step=1)

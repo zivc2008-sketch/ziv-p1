@@ -1,3 +1,4 @@
+import streamlit as st
 <!DOCTYPE html>
 <html lang="he" dir="rtl">
 <head>

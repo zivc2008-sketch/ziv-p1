@@ -2,6 +2,7 @@ import streamlit as st
 st.title("NBA")
 st.header("Enter height to see the expacted points")
 height = st.number_input("enter height:", min_value=0, step=1)
+weught = st.number_input("enter weight:", min_value=0, step=1)
 
 
 w= -0.03650734467294015

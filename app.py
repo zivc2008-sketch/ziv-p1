@@ -5,10 +5,11 @@ height = st.number_input("enter height:", min_value=0, step=1)
 weught = st.number_input("enter weight:", min_value=0, step=1)
 
 
-w= -0.03650734467294015
-b= 15.534315785648516
+w1= -0.07072934956142785
+w2= 0.03051940672845106
+b= 19.337737482061055
 
-prediction = height * w +b
+prediction = height * w1 + weight *w2 +b
 
 st.subheader(f"result: {prediction}")
 

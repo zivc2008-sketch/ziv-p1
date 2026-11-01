@@ -1,3 +1,11 @@
+import streamlit as st
+import streamlit.components.v1 as components
+
+# הגדרת העמוד לרוחב מלא
+st.set_page_config(page_title="משחק ניחוש נקודות NBA", layout="wide")
+
+# ה-HTML המלא כולל העיצוב וה-JavaScript
+html_code = """
 <!DOCTYPE html>
 <html lang="he" dir="rtl">
 <head>
@@ -129,17 +137,14 @@
     </div>
 
     <script>
-        // Model Parameters from original Python script
         const W1 = -0.07072934956142785;
         const W2 = 0.03051940672845106;
         const B = 19.337737482061055;
 
-        // State variables
         let score = 0;
         let streak = 0;
         let rounds = 0;
 
-        // DOM elements
         const heightInput = document.getElementById('height-input');
         const weightInput = document.getElementById('weight-input');
         const guessInput = document.getElementById('guess-input');
@@ -153,13 +158,11 @@
         const streakEl = document.getElementById('streak');
         const roundsEl = document.getElementById('rounds');
 
-        // Helper function to get prediction
         function calculatePrediction(height, weight) {
             const rawPrediction = (height * W1) + (weight * W2) + B;
             return Math.round(rawPrediction);
         }
 
-        // Randomize player stats
         function generateRandomPlayer() {
             const randomHeight = Math.floor(Math.random() * 41) + 180;
             const randomWeight = Math.floor(Math.random() * 56) + 75;
@@ -170,7 +173,6 @@
             resultBox.classList.add('hidden');
         }
 
-        // Check user guess
         function checkGuess() {
             const height = parseFloat(heightInput.value);
             const weight = parseFloat(weightInput.value);
@@ -193,14 +195,12 @@
             resultBox.classList.remove('hidden');
 
             if (diff === 0) {
-                // Perfect Guess
                 score += 100;
                 streak++;
                 resultBox.className = "p-5 rounded-2xl text-center space-y-2 bg-emerald-500/20 border border-emerald-500/40 text-emerald-300";
                 resultTitle.innerHTML = '<i class="fa-solid fa-trophy text-amber-400"></i> ניחוש מושלם! (100+ נקודות)';
                 resultDetails.textContent = `התוצאה המדויקת של המודל היא בדיוק ${exactPrediction} נקודות.`;
             } else if (diff <= 2) {
-                // Close Guess - Fixed expression here!
                 const pointsWon = Math.max(10, 50 - (diff * 15));
                 score += pointsWon;
                 streak++;
@@ -208,20 +208,17 @@
                 resultTitle.innerHTML = `<i class="fa-solid fa-fire"></i> קרוב מאוד! (+${pointsWon} נקודות)`;
                 resultDetails.textContent = `נחשת ${userGuess}. התוצאה של המודל היא ${exactPrediction} (היית רחוק ב-${diff} בלבד).`;
             } else {
-                // Wrong Guess
                 streak = 0;
                 resultBox.className = "p-5 rounded-2xl text-center space-y-2 bg-rose-500/20 border border-rose-500/40 text-rose-300";
                 resultTitle.innerHTML = '<i class="fa-solid fa-xmark"></i> לא מדויק...';
                 resultDetails.textContent = `נחשת ${userGuess}, אך תוצאת המודל השלמה היא ${exactPrediction}. (הפרש של ${diff}).`;
             }
 
-            // Update Scoreboard
             scoreEl.textContent = score;
             streakEl.textContent = `${streak} 🔥`;
             roundsEl.textContent = rounds;
         }
 
-        // Event Listeners
         submitBtn.addEventListener('click', checkGuess);
         randomizeBtn.addEventListener('click', generateRandomPlayer);
         
@@ -231,8 +228,11 @@
             }
         });
 
-        // Initialize with random values
         window.onload = generateRandomPlayer;
     </script>
 </body>
 </html>
+"""
+
+# הרצת ה-HTML בתוך ה-Streamlit
+components.html(html_code, height=850, scrolling=True)
